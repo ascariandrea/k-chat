@@ -5,7 +5,7 @@ import { store } from '../utils';
 import './chat.css';
 
 const renderMessage = (message, i) => {
-  const isMe = store.getUsername() === message.username;
+  const isMe = store.getUserId() === message.userId;
   const direction = isMe ? 'sent' : 'received';
   const hAlign = isMe ? 'right' : 'left';
 
@@ -32,7 +32,7 @@ class Chat extends React.Component {
 
 Chat.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({
-    username: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['default', 'think']).isRequired
   })).isRequired

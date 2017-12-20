@@ -29,15 +29,15 @@ export default class App extends React.Component {
         messages: this.state.messages.concat(data)
       });
     })
-    socket.on('username-updated', (username) => {
-      if (username !== store.getUsername()) {
-        this.setState({ username });
+    socket.on('username-updated', (data) => {
+      if (data.userId !== store.getUserId()) {
+        this.setState({ username: data.username });
       }
     });
-    if (!store.getUsername()) {
-      store.setUsername(randomUsername());
-      socket.emit('username-updated', store.getUsername());
+    if (!store.getUserId()) {
+      store.setUserId(randomUsername());
     }
+    socket.emit('username-updated', { userId: store.getUserId(), username: store.getUserId() });
   }
 
   render() {
@@ -46,7 +46,7 @@ export default class App extends React.Component {
       <FlexView className='app' column>
         <FlexView className='header' hAlignContent='center' grow >
           <FlexView>
-              {username}
+              {username || 'anonymous'}
           </FlexView>
         </FlexView>
         <Chat messages={messages} />
@@ -59,10 +59,10 @@ export default class App extends React.Component {
     if (text.startsWith('/nick ')) {
       const username = text.replace('/nick ', '');
       store.setUsername(username);
-      socket.emit('username-updated', username);
+      socket.emit('username-updated', { userId: store.getUserId(), username });
     } else if (text.startsWith('/think ')) {
       const message = {
-        username: store.getUsername(),
+        userId: store.getUserId(),
         text: text.replace('/think ', ''),
         type: 'think'
       };
@@ -71,7 +71,7 @@ export default class App extends React.Component {
       socket.emit('new-message', message);
     } else {
       const message = {
-        username: store.getUsername(),
+        userId: store.getUserId(),
         text,
         type: 'default'
       };

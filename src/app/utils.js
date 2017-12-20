@@ -1,12 +1,12 @@
 const store = {
   getGuestUsername() {
-   return window.localStorage && window.localStorage.getItem('guestUsername');
+   return window.localStorage.getItem('guestUsername');
   },
   setUsername(username) {
     window.localStorage.setItem('username', username);
   },
   getUsername() {
-    return window.localStorage && window.localStorage.getItem('username');
+    return window.localStorage.getItem('username');
   },
   getMessages() {
     return window.localStorage.getItem('messages') ? JSON.parse(window.localStorage.getItem('messages')) : []
@@ -15,6 +15,12 @@ const store = {
     const storedMessages = window.localStorage.getItem('messages') ? JSON.parse(window.localStorage.getItem('messages')) : [];
     const messages = storedMessages.concat(message);
     window.localStorage.setItem('messages', JSON.stringify(messages));
+  },
+  setUserId(id) {
+    window.localStorage.setItem('userId', id);
+  },
+  getUserId() {
+    return window.localStorage.getItem('userId');
   }
 }
 

@@ -5,6 +5,11 @@
 .chat .message {
   margin-bottom: 10px;
 }
+
+.chat .message.think {
+  color: darkgray;
+}
+
 .chat .message .text {
   border-radius: 4px;
   padding: 10px;

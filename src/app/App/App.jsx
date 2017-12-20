@@ -34,7 +34,10 @@ export default class App extends React.Component {
         this.setState({ username });
       }
     });
-    socket.emit('username-updated', store.getUsername() || randomUsername());
+    if (!store.getUsername()) {
+      store.setUsername(randomUsername());
+      socket.emit('username-updated', store.getUsername());
+    }
   }
 
   render() {
@@ -54,13 +57,23 @@ export default class App extends React.Component {
 
   onInputSubmit(text) {
     if (text.startsWith('/nick ')) {
-      const username = text.split(' ')[1];
+      const username = text.replace('/nick ', '');
       store.setUsername(username);
       socket.emit('username-updated', username);
+    } else if (text.startsWith('/think ')) {
+      const message = {
+        username: store.getUsername(),
+        text: text.replace('/think ', ''),
+        type: 'think'
+      };
+
+      store.addMessage(message);
+      socket.emit('new-message', message);
     } else {
       const message = {
         username: store.getUsername(),
-        text
+        text,
+        type: 'default'
       };
       store.addMessage(message);
       socket.emit('new-message', message);

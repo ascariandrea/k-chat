@@ -12,7 +12,6 @@ const store = {
     return window.localStorage.getItem('messages') ? JSON.parse(window.localStorage.getItem('messages')) : []
   },
   addMessage(message) {
-
     const storedMessages = window.localStorage.getItem('messages') ? JSON.parse(window.localStorage.getItem('messages')) : [];
     const messages = storedMessages.concat(message);
     window.localStorage.setItem('messages', JSON.stringify(messages));

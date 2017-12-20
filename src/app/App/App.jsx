@@ -1,12 +1,15 @@
 import React from 'react';
 import FlexView from 'react-flexview';
 import PropTypes from 'prop-types';
+import socketIOClient from 'socket.io-client';
 import Chat from '../Chat';
 import Input from '../Input';
 import { store } from '../utils';
 import './app.css';
 
+const ENDPOINT = 'http://localhost:4001';
 
+let socket;
 
 export default class App extends React.Component {
 
@@ -16,6 +19,15 @@ export default class App extends React.Component {
     messages: store.getMessages()
     }
     this.onInputSubmit = this.onInputSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    socket = socketIOClient(ENDPOINT);
+    socket.on('new-message-received', (data) => {
+      this.setState({
+        messages: this.state.messages.concat(data)
+      });
+    })
   }
 
   render() {
@@ -34,7 +46,7 @@ export default class App extends React.Component {
   }
 
   onInputSubmit(text) {
-
+    socket.emit('new-message', { text });
   }
 
 }

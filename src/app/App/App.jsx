@@ -2,6 +2,7 @@ import React from 'react';
 import FlexView from 'react-flexview';
 import PropTypes from 'prop-types';
 import Chat from '../Chat';
+import Input from '../Input';
 import { store } from '../utils';
 import './app.css';
 
@@ -14,6 +15,7 @@ export default class App extends React.Component {
     this.state = {
     messages: store.getMessages()
     }
+    this.onInputSubmit = this.onInputSubmit.bind(this);
   }
 
   render() {
@@ -26,8 +28,13 @@ export default class App extends React.Component {
           </FlexView>
         </FlexView>
         <Chat messages={messages} />
+        <Input onSubmit={this.onInputSubmit}/>
       </FlexView>
     );
+  }
+
+  onInputSubmit(text) {
+
   }
 
 }

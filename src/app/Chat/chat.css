@@ -1,0 +1,19 @@
+.chat {
+  padding: 20px;
+}
+
+.chat .message {
+  margin-bottom: 10px;
+}
+.chat .message .text {
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.chat .message.sent .text {
+  background: rgb(72, 204, 68);
+}
+
+.chat .message.received {
+  background: #CCC;
+}

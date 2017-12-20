@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FlexView from 'react-flexview';
+import { store } from '../utils';
 import './chat.css';
 
 const renderMessage = (message, i) => {
-  const direction = 'sent';
-  const hAlign = 'right';
+  const isMe = store.getUsername() === message.username;
+  const direction = isMe ? 'sent' : 'received';
+  const hAlign = isMe ? 'right' : 'left';
   return (
     <FlexView key={i} className={`message ${direction}`} hAlignContent={hAlign}>
       <div className='text'>
@@ -29,6 +31,7 @@ class Chat extends React.Component {
 
 Chat.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({
+    username: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   })).isRequired
 }

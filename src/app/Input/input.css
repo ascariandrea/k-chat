@@ -2,6 +2,10 @@
   padding: 10px;
 }
 
+.input form {
+  width: 100%;
+}
+
 .input input {
   width: 100%;
 }

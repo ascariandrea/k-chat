@@ -23,6 +23,7 @@ class Input extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.onSubmit(this.state.text);
+    this.setState({ text: undefined });
   }
 
   render() {

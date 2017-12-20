@@ -5,8 +5,8 @@ import './app.css';
 
 const App = () => {
   return (
-    <FlexView>
-      <FlexView className='header'>
+    <FlexView className='app' column>
+      <FlexView className='header' hAlignContent='center' grow >
         <FlexView>
             username
         </FlexView>

@@ -27,8 +27,16 @@ export default class App extends React.Component {
     socket.on('new-message', (data) => {
       this.setState({
         messages: this.state.messages.concat(data)
+      }, () => {
+        store.addMessage(data);
       });
-    })
+    });
+    socket.on('delete-last-message', () => {
+      const messages = this.state.messages.slice(0,   this.state.messages.length - 1);
+      this.setState({ messages }, () => {
+        store.setMessages(messages);
+      });
+    });
     socket.on('username-updated', (data) => {
       if (data.userId !== store.getUserId()) {
         this.setState({ username: data.username });
@@ -69,6 +77,8 @@ export default class App extends React.Component {
 
       store.addMessage(message);
       socket.emit('new-message', message);
+    } else if (text.startsWith('/oops')) {
+      socket.emit('delete-last-message');
     } else {
       const message = {
         userId: store.getUserId(),

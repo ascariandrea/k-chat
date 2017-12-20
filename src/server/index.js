@@ -13,6 +13,7 @@ io.on("connection", (socket) => {
   console.log("New client connected");
 
   socket.on('new-message', data => io.emit('new-message', data));
+  socket.on('delete-last-message', data => io.emit('delete-last-message', data));
   socket.on('username-updated', data => io.emit('username-updated', data));
 
   socket.on("disconnect", () => console.log("Client disconnected"));

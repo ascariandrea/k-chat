@@ -11,9 +11,15 @@ const store = {
   getMessages() {
     return window.localStorage.getItem('messages') ? JSON.parse(window.localStorage.getItem('messages')) : []
   },
+  setMessages(messages) {
+    window.localStorage.setItem('messages', JSON.stringify(messages));
+  },
   addMessage(message) {
     const storedMessages = window.localStorage.getItem('messages') ? JSON.parse(window.localStorage.getItem('messages')) : [];
-    const messages = storedMessages.concat(message);
+    let messages = storedMessages.concat(message);
+    if (messages.length > 5) {
+      messages.shift()
+    }
     window.localStorage.setItem('messages', JSON.stringify(messages));
   },
   setUserId(id) {

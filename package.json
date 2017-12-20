@@ -9,12 +9,14 @@
     "babel-loader": "^7.1.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
+    "npm-run-parallel": "^0.6.0",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
     "express": "^4.16.2",
+    "http-serve": "^1.0.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -23,6 +25,10 @@
     "socket.io-client": "^2.0.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.config.js --watch"
+    "build": "webpack --config webpack.config.js",
+    "start:server": "node src/server",
+    "start:client": "http-serve build",
+    "start": "npm-run-parallel start:client start:server",
+    "dev": "webpack-dev-server --open --config webpack.config.js --watch"
   }
 }
